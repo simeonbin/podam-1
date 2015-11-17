@@ -1,7 +1,15 @@
 machine:
   ruby:
     version: rbx-2.2.6
-
+test:
+  post:
+    - bundle exec rake spinach:
+        environment:
+          RAILS_ENV: test
+test:
+  minitest_globs:
+    - test/integration/**/*.rb
+    - test/extra-dir/**/*.rb
 test:
   override:
     - mkdir -p $CIRCLE_TEST_REPORTS/cucumber
