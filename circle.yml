@@ -1,11 +1,12 @@
 machine:
   ruby:
     version: rbx-2.2.6
-    
-gem 'rspec_junit_formatter', '0.2.2'
-
-gem 'minitest-ci', :git => 'git@github.com:circleci/minitest-ci.git'
-
+dependencies:
+  post:
+    - bundle exec rake assets:precompile
+test:
+  post:
+    - bundle exec rake test:custom
 test:
   post:
     - bundle exec rake spinach:
@@ -15,11 +16,17 @@ test:
   minitest_globs:
     - test/integration/**/*.rb
     - test/extra-dir/**/*.rb
+
 test:
   override:
-    - mkdir -p $CIRCLE_TEST_REPORTS/cucumber
-    - bundle exec cucumber --format json --out $CIRCLE_TEST_REPORTS/cucumber/tests.cucumber
+    - mkdir -p $CIRCLE_TEST_REPORTS/cucumber:
+        parallel: true
+    - bundle exec cucumber --format json --out $CIRCLE_TEST_REPORTS/cucumber/tests.cucumber:
+        parallel: true
+        files:
+          - spec/feature/*.feature
 test:
   post:
     - mkdir -p $CIRCLE_TEST_REPORTS/junit/
     - find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+
