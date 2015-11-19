@@ -11,6 +11,9 @@ test:
   minitest_globs:
     - test/integration/**/*.rb
     - test/extra-dir/**/*.rb
+general:
+   artifacts:
+     - $CIRCLE_TEST_REPORTS
 
 test:
   post:
