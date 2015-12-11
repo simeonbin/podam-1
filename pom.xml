@@ -18,6 +18,8 @@
 		<serenity.version>1.0.59</serenity.version>
 		<spring.version>4.1.6.RELEASE</spring.version>
         <spring.integration.version>4.1.3.RELEASE</spring.integration.version>
+        <maven-compiler-source>7</maven-compiler-source>
+        <maven-compiler-target>7</maven-compiler-target>
 	</properties>
 
 	<url>http://mtedone.github.io/podam/</url>
